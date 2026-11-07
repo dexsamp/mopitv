@@ -1,0 +1,6 @@
+{
+  "name": "MoppiTV",
+  "description": "Futuristic minimalist white anime streaming and community platform with watch party rooms, gacha anime pet companions, customizable frames, anime reels, and clan battles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
