@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role, checklist badges, and Moppi Gem currency",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "role": { "type": "string" },
+        "isPremium": { "type": "boolean" },
+        "moppiGems": { "type": "integer" },
+        "equippedFrameId": { "type": "string" },
+        "equippedPetId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "username", "role", "isPremium", "moppiGems", "createdAt", "updatedAt"]
+    },
+    "WatchPartyMessage": {
+      "title": "WatchPartyMessage",
+      "description": "Real-time chat message sent by a viewer during a synchronized watch party",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "isSenderPremium": { "type": "boolean" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["roomId", "senderId", "senderName", "senderRole", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/watchparties/{roomId}/messages/{messageId}": {
+      "schema": "WatchPartyMessage",
+      "description": "Real-time watch party chat messages"
+    }
+  }
+}
