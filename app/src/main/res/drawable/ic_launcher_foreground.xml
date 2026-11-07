@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:width="66dp"
+        android:height="66dp"
+        android:insetLeft="21dp"
+        android:insetTop="21dp"
+        android:insetRight="21dp"
+        android:insetBottom="21dp"
+        android:drawable="@drawable/moppi_logo"
+        android:gravity="center"
+        tools:targetApi="23" />
+</layer-list>
