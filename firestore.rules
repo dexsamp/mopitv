@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidUser(data) {
+      return data.userId is string &&
+             data.username is string &&
+             data.role in ['DEVELOPER', 'ADMIN', 'SEPUH', 'WARGA'] &&
+             data.isPremium is bool &&
+             data.moppiGems is int &&
+             data.createdAt is timestamp &&
+             data.createdAt <= request.time &&
+             data.updatedAt is timestamp &&
+             data.updatedAt <= request.time;
+    }
+
+    function isValidMessage(data) {
+      return data.roomId is string &&
+             data.senderId == request.auth.uid &&
+             data.senderName is string &&
+             data.message is string &&
+             data.message.size() > 0 &&
+             data.message.size() <= 500 &&
+             data.createdAt is timestamp &&
+             data.createdAt <= request.time;
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data);
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) &&
+                      request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false;
+    }
+
+    match /watchparties/{roomId}/messages/{messageId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidMessage(request.resource.data);
+      allow update, delete: if false;
+    }
+  }
+}
